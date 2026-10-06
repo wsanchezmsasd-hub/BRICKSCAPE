@@ -1,22 +1,22 @@
 # 🎮 BRICKSCAPE: The Amazing Digital Circus
 
-> **Welcome to Your Eternal Prison of Fun!** *(A Tetris-Inspired Brick Breaker Adventure)*
+> **Welcome to Your ~~Eternal Prison~~ world of Fun!** *(A Tetris-Inspired Brick Breaker Adventure)*
 
 ---
 
 ## 🎪 The Story
 
-As a reward for being an amazing citizen and destroying the evil brick walls, you've been sent to an eternal fun Tetris world! But beware—this digital circus is more dangerous than it seems...
+As a reward for being an amazing citizen and destroying the evil brick walls, you've been sent to an eternal ~~prison~~ fun Tetris world! But beware—this digital circus is more dangerous than it seems...
 
 ## 🕹️ How to Survive
 
 ### The Challenge
-Your mission is simple: **fight back against the falling Tetris blocks** before they consume everything!
+Your mission is simple: **fight back against the falling Tetris blocks** before they consume the bottom row (along with you)!
 
 ### The Rules
-- **Full Horizontal Stack = Game Over** 💥 — If blocks fill an entire row at the bottom, you'll be erased from all multiverses!
+- **Full Horizontal Stack = Game Over** 💥 — If blocks fill an entire row at the bottom, you'll be ~~erased from all multiverses~~ defeated!
 - **Protect Your Paddle** 🛡️ — Never let the blocks crush your paddle, or it's game over!
-- **Keep Climbing** 📈 — Survive as long as possible and climb the leaderboards!
+- **Keep Climbing** 📈 — Survive as long as possible and ~~survive~~ keep reaching new levels!
 
 ## ⚙️ Features
 - Classic brick-breaking gameplay
