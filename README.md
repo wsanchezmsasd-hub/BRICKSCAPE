@@ -17,6 +17,7 @@ Your mission is simple: **fight back against the falling Tetris blocks** before 
 - **Full Horizontal Stack = Game Over** 💥 — If blocks fill an entire row at the bottom, you'll be ~~erased from all multiverses~~ defeated!
 - **Protect Your Paddle** 🛡️ — Never let the blocks crush your paddle, or it's game over!
 - **Keep Climbing** 📈 — Survive as long as possible and ~~survive~~ keep reaching new levels!
+- **Buy upgrades** 🛍 — Things can get challenging here, you can collect brick chunks to buy upgrades, like an extra ball, or a shield against a stack!
 
 ## ⚙️ Features
 - Classic brick-breaking gameplay
