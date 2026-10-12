@@ -5,7 +5,7 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,21 +16,32 @@ body {
 
 main {
   width: 100%;
-  max-width: 640px;
-  padding: 16px;
+  max-width: 680px;
+  padding: 10px 16px;
   text-align: center;
 }
 
 canvas {
   display: block;
-  width: 100%;
+  width: min(100%, 43svh);
   height: auto;
+  max-height: 58svh;
+  max-width: 100%;
+  margin: 0 auto;
   border: 2px solid #fff;
   background: #000;
+  touch-action: none;
 }
 
 p {
-  margin: 12px 0 0;
-  font-size: 14px;
+  margin: 8px 0 0;
+  font-size: 13px;
   line-height: 1.5;
+}
+
+@media (max-height: 600px) {
+  canvas {
+    width: min(100%, 38svh);
+    max-height: 50svh;
+  }
 }

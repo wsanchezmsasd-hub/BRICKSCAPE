@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Block Breaker</title>
+  <title>Brickscape</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main>
-    <canvas id="game" width="600" height="450" aria-label="Block Breaker game"></canvas>
-    <p>Move the paddle with the left and right arrow keys, or A and D.</p>
+    <canvas id="game" width="600" height="800" aria-label="Brickscape falling-block game"></canvas>
+    <p>Aim with the pointer, move with the arrow keys or A and D, then launch with Space, Enter, or a click. Balls return when they reach the bottom; blocks drop after each volley. Use 1 or 2 to buy a permanent upgrade between waves.</p>
   </main>
 
-  <!-- The order matters: game.js goes first because the other files use its settings. -->
+  <!-- Config.js must load first so gameplay settings are available to the game. -->
+  <script src="Config.js"></script>
+  <script src="components.js"></script>
   <script src="game.js"></script>
   <script src="bricks.js"></script>
   <script src="collisions.js"></script>
+  <script src="draw.js"></script>
+  <script src="controls.js"></script>
 </body>
 </html>

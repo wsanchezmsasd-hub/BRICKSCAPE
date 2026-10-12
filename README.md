@@ -11,18 +11,21 @@ As a reward for being an amazing citizen and destroying the evil brick walls, yo
 ## 🕹️ How to Survive
 
 ### The Challenge
-Your mission is simple: **fight back against the falling Tetris blocks** before they consume the bottom row (along with you)!
+Your mission is simple: **launch volleys of balls into Tetris blocks**. Catch the returning balls, then face the next drop as the stack advances.
 
 ### The Rules
-- **Full Horizontal Stack = Game Over** 💥 — If blocks fill an entire row at the bottom, you'll be ~~erased from all multiverses~~ defeated!
-- **Protect Your Paddle** 🛡️ — Never let the blocks crush your paddle, or it's game over!
-- **Keep Climbing** 📈 — Survive as long as possible and ~~survive~~ keep reaching new levels!
-- **Buy upgrades** 🛍 — Things can get challenging here, you can collect brick chunks to buy upgrades, like an extra ball, or a shield against a stack!
+- **Aim and launch** — Move the paddle with the arrow keys or A/D. Aim with the pointer and launch with Space, Enter, or a click.
+- **Catch your balls** — Balls that return to the paddle wait there until the next volley. Once all balls return, the blocks drop one or two rows.
+- **Use block effects** — Special blocks are labeled `ROW` or `BALL`. Breaking one clears its row or adds a temporary ball for the current wave.
+- **Keep the bottom clear** 💥 — If the stack reaches the bottom, you'll be ~~erased from all multiverses~~ defeated!
+- **Clear horizontal rows** 🧹 — Complete rows disappear; collect brick chunks dropped by broken blocks.
+- **Buy permanent upgrades** 🛍 — Spend chunks between waves. Each upgrade can only be bought once, while distinct bonuses can stack.
 
 ## ⚙️ Features
-- Classic brick-breaking gameplay
-- Tetris-inspired falling blocks
-- Strategic paddle control
+- A taller playing field filled with descending Tetris pieces
+- Tougher and more numerous pieces on later waves
+- Distinct permanent upgrades and temporary ball effects
+- Strategic aiming and paddle control
 - Progressive difficulty
 
 ---
