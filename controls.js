@@ -20,7 +20,7 @@ document.addEventListener("keydown", function (event) {
   if (!event.repeat && gameMode === "playing" && (key === " " || key === "enter")) {
     launchBalls();
   }
-  if (event.key.startsWith("Arrow")) {
+  if (event.key.startsWith("Arrow") || key === " ") {
     event.preventDefault();
   }
 });

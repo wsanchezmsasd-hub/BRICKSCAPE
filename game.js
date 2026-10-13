@@ -20,9 +20,9 @@ const HEIGHT = canvas.height; // 800
 // A positive vy means the ball is moving DOWN the screen.
 // ------------------------------------------------------------
 const BALL_SPEED = 4;
-let ballSpeed = BALL_SPEED;
 let permanentBallCount = 1;
 let balls = [];
+let pendingBallLaunches = [];
 let aimAngle = 0;
 let volleyActive = false;
 
@@ -32,6 +32,7 @@ function createBall(x, y, temporary = false) {
 
 function resetBalls() {
   balls = Array.from({ length: permanentBallCount }, () => createBall());
+  pendingBallLaunches = [];
   volleyActive = false;
   positionHeldBalls();
 }
@@ -68,6 +69,7 @@ let piecesThisWave = 0;
 let brickChunks = [];
 let chunkBalance = 0;
 let chunkValue = GAME_CONFIG.brickChunks.value;
+let chunkDropChance = GAME_CONFIG.brickChunks.dropChance;
 let gameMode = "playing";
 let wave = 1;
 let gameOverReason = "";
@@ -94,12 +96,12 @@ const upgrades = [
     }
   },
   {
-    id: "ballSpeed",
-    name: "+10% Ball Speed",
-    description: "Ball speed +10%",
+    id: "chunkChance",
+    name: "+15% Chunk Chance",
+    description: "Higher chunk drop chance",
     cost: 5,
     apply() {
-      ballSpeed *= 1.1;
+      chunkDropChance = Math.min(0.95, chunkDropChance + 0.15);
     }
   },
   {
@@ -139,6 +141,7 @@ function update() {
     return;
   }
 
+  updatePendingBallLaunches();
   positionHeldBalls();
   if (!volleyActive) {
     return;
@@ -154,8 +157,27 @@ function update() {
     if (ball.state === "active") bounceOffBricks(ball);
   }
 
-  if (balls.every((ball) => ball.state === "held")) {
+  if (balls.every((ball) => ball.state === "held") && pendingBallLaunches.length === 0) {
     finishVolley();
+  }
+}
+
+function scheduleExtraBall(x, y, vx, vy) {
+  pendingBallLaunches.push({ x, y, vx, vy, ticksRemaining: 12 });
+}
+
+function updatePendingBallLaunches() {
+  for (let index = pendingBallLaunches.length - 1; index >= 0; index--) {
+    const launch = pendingBallLaunches[index];
+    launch.ticksRemaining -= 1;
+    if (launch.ticksRemaining > 0) continue;
+
+    const extraBall = createBall(launch.x, launch.y, true);
+    extraBall.state = "active";
+    extraBall.vx = launch.vx;
+    extraBall.vy = launch.vy;
+    balls.push(extraBall);
+    pendingBallLaunches.splice(index, 1);
   }
 }
 
@@ -192,8 +214,8 @@ function launchBalls() {
   for (const ball of balls) {
     if (ball.state !== "held") continue;
     ball.state = "active";
-    ball.vx = Math.sin(aimAngle) * ballSpeed;
-    ball.vy = -Math.cos(aimAngle) * ballSpeed;
+    ball.vx = Math.sin(aimAngle) * BALL_SPEED;
+    ball.vy = -Math.cos(aimAngle) * BALL_SPEED;
   }
   volleyActive = true;
 }
@@ -254,12 +276,17 @@ function spawnFallingPiece() {
         continue;
       }
 
-      const strength = 1 + Math.floor((wave - 1) / GAME_CONFIG.fallingPieces.strengthWavesPerIncrease);
+      const minimumStrength = 1 + Math.floor((wave - 1) / GAME_CONFIG.fallingPieces.strengthWavesPerIncrease);
       const effectIndex = Math.floor(Math.random() * positions.length);
       const effects = ["ROW", "BALL"];
       const effect = effects[Math.floor(Math.random() * effects.length)];
       const cells = positions.map(({ x, y }, index) =>
-        createBrick(x, y, strength, index === effectIndex ? effect : null)
+        createBrick(
+          x,
+          y,
+          minimumStrength + Math.floor(Math.random() * (minimumStrength + 1)),
+          index === effectIndex ? effect : null
+        )
       );
       bricks.push(...cells);
       spawnedPieces += 1;
@@ -382,22 +409,17 @@ function endGame(reason) {
 
 // ------------------------------------------------------------
 // THE GAME LOOP
-// The browser calls frame() every time it is ready to draw.
-// Some screens are faster than others, so we make sure update()
-// always runs exactly 60 times per second on every computer.
+// The browser calls frame() every time it is ready to draw. Updates
+// use fixed 60 Hz steps, with held Space feeding the simulation faster.
 // ------------------------------------------------------------
 const STEP = 1000 / 60;
 let lastTime = 0;
 let leftover = 0;
 
 function frame(now) {
-  leftover = leftover + (now - lastTime);
+  const elapsed = Math.min(now - lastTime, 250);
+  leftover += elapsed * (keys[" "] ? 4 : 1);
   lastTime = now;
-
-  // If the tab was hidden for a while, don't try to catch up.
-  if (leftover > 250) {
-    leftover = 250;
-  }
 
   while (leftover >= STEP) {
     update();

@@ -86,7 +86,7 @@ function bounceOffBricks(ball) {
 
     brick.hitsRemaining -= 1;
     if (brick.hitsRemaining <= 0) {
-      if (Math.random() < GAME_CONFIG.brickChunks.dropChance) {
+      if (Math.random() < chunkDropChance) {
         const chunkSize = GAME_CONFIG.brickChunks.size;
         createBrickChunk(brick.x + brick.width / 2 - chunkSize / 2, brick.y + brick.height / 2 - chunkSize / 2);
       }
@@ -96,11 +96,7 @@ function bounceOffBricks(ball) {
         bricks.splice(index, 1);
       }
       if (brick.effect === "BALL") {
-        const extraBall = createBall(ball.x, ball.y, true);
-        extraBall.state = "active";
-        extraBall.vx = -ball.vx;
-        extraBall.vy = ball.vy;
-        balls.push(extraBall);
+        scheduleExtraBall(ball.x, ball.y, -ball.vx, ball.vy);
       }
     }
 

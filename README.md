@@ -14,8 +14,8 @@ As a reward for being an amazing citizen and destroying the evil brick walls, yo
 Your mission is simple: **launch volleys of balls into Tetris blocks**. Catch the returning balls, then face the next drop as the stack advances.
 
 ### The Rules
-- **Aim and launch** — Move the paddle with the arrow keys or A/D. Aim with the pointer and launch with Space, Enter, or a click.
-- **Catch your balls** — Balls that return to the paddle wait there until the next volley. Once all balls return, the blocks drop one or two rows.
+- **Aim and launch** — Move the paddle with the arrow keys or A/D. Aim with the pointer and launch with Space, Enter, or a click. Hold Space to speed up play.
+- **Catch your balls** — Balls that return to the paddle wait there until the next volley. After each volley, the stack drops one or two rows.
 - **Use block effects** — Special blocks are labeled `ROW` or `BALL`. Breaking one clears its row or adds a temporary ball for the current wave.
 - **Keep the bottom clear** 💥 — If the stack reaches the bottom, you'll be ~~erased from all multiverses~~ defeated!
 - **Clear horizontal rows** 🧹 — Complete rows disappear; collect brick chunks dropped by broken blocks.
