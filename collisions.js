@@ -91,8 +91,11 @@ function bounceOffBricks(ball) {
         createBrickChunk(brick.x + brick.width / 2 - chunkSize / 2, brick.y + brick.height / 2 - chunkSize / 2);
       }
       if (brick.effect === "ROW") {
+        const rowBrickCount = bricks.filter((candidate) => candidate.y === brick.y).length;
+        GameState.Score += rowBrickCount * 10;
         bricks = bricks.filter((candidate) => candidate.y !== brick.y);
       } else {
+        GameState.Score += 10;
         bricks.splice(index, 1);
       }
       if (brick.effect === "BALL") {

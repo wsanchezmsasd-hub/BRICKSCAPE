@@ -12,6 +12,12 @@ const ctx = canvas.getContext("2d");
 const WIDTH = canvas.width;   // 600
 const HEIGHT = canvas.height; // 800
 
+const GameState = {
+  Lives: 5,
+  MaxLives: 5,
+  Score: 0
+};
+
 
 // ------------------------------------------------------------
 // THE BALL
@@ -121,8 +127,19 @@ const upgrades = [
     apply() {
       permanentBallCount += 1;
     }
+  },
+  {
+    id: "extraLife",
+    name: "+1 Max Life",
+    description: "Maximum lives +1, restore 1 life",
+    cost: 6,
+    apply() {
+      GameState.MaxLives += 1;
+      GameState.Lives += 1;
+    }
   }
 ];
+let extraLifeBoughtThisIntermission = false;
 
 
 // ------------------------------------------------------------
@@ -228,7 +245,7 @@ function finishVolley() {
   clearCompletedRows();
   const rowsToDrop = Math.random() < 0.5 ? 1 : 2;
   if (!dropBoardRows(rowsToDrop)) {
-    endGame("THE STACK REACHED THE BOTTOM");
+    endGame("OUT OF LIVES");
     return;
   }
   checkBottomRow();
@@ -243,8 +260,16 @@ function finishVolley() {
 }
 
 function dropBoardRows(rowCount) {
-  if (bricks.some((brick) => brick.y + rowCount * BRICK_HEIGHT >= BOARD_BOTTOM)) {
-    return false;
+  const bricksThatHitBottom = bricks.filter((brick) =>
+    brick.y + rowCount * BRICK_HEIGHT >= BOARD_BOTTOM
+  );
+  if (bricksThatHitBottom.length > 0) {
+    GameState.Lives -= 1;
+    if (GameState.Lives <= 0) {
+      GameState.Lives = 0;
+      return false;
+    }
+    bricks = bricks.filter((brick) => !bricksThatHitBottom.includes(brick));
   }
   for (const brick of bricks) {
     brick.y += rowCount * BRICK_HEIGHT;
@@ -360,7 +385,9 @@ function updateBrickChunks() {
 
 function chooseUpgrade(excludedId = null) {
   const available = upgrades.filter((upgrade) =>
-    upgrade.id !== excludedId && !purchasedUpgrades.has(upgrade.id)
+    upgrade.id !== excludedId &&
+    (upgrade.id !== "extraLife" || !extraLifeBoughtThisIntermission) &&
+    (upgrade.id === "extraLife" || !purchasedUpgrades.has(upgrade.id))
   );
   if (available.length === 0) {
     return null;
@@ -370,7 +397,11 @@ function chooseUpgrade(excludedId = null) {
 
 function beginIntermission() {
   gameMode = "intermission";
-  upgradeOffers = [chooseUpgrade(), chooseUpgrade()];
+  extraLifeBoughtThisIntermission = false;
+  upgradeOffers = [
+    upgrades.find((upgrade) => upgrade.id === "extraLife"),
+    chooseUpgrade("extraLife")
+  ];
   if (upgradeOffers[0] && upgradeOffers[0].id === upgradeOffers[1]?.id) {
     upgradeOffers[1] = chooseUpgrade(upgradeOffers[0].id);
   }
@@ -387,7 +418,11 @@ function buyUpgrade(index) {
 
   chunkBalance -= upgrade.cost;
   upgrade.apply();
-  purchasedUpgrades.add(upgrade.id);
+  if (upgrade.id === "extraLife") {
+    extraLifeBoughtThisIntermission = true;
+  } else {
+    purchasedUpgrades.add(upgrade.id);
+  }
   upgradeOffers[index] = chooseUpgrade(upgradeOffers[1 - index]?.id);
 }
 

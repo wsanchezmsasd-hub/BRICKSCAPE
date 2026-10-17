@@ -74,6 +74,9 @@ function drawHud() {
   ctx.textAlign = "right";
   ctx.fillStyle = "white";
   ctx.fillText(`WAVE ${wave}  PIECES ${spawnedPieces}/${piecesThisWave}`, WIDTH - 12, 22);
+  ctx.textAlign = "left";
+  ctx.fillText(`SCORE: ${GameState.Score}`, 12, 42);
+  ctx.fillText(`LIVES: ${GameState.Lives}/${GameState.MaxLives}`, 180, 42);
 }
 
 function drawIntermission() {
